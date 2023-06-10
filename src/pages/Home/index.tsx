@@ -11,8 +11,10 @@ import Error from '../../components/Error';
 import ButtonMore from '../../components/ButtonMore';
 
 import './Home.less';
+import ElementView from '../../components/ElementView';
 
 const Home: React.FC = () => {
+  const sectionRef = React.useRef(null)
   const [products, setProducts] = React.useState([]);
   const [images, setImages] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(false);
@@ -88,11 +90,12 @@ const Home: React.FC = () => {
 
   return (
     <main className="main">
+      <ElementView sectionRef={sectionRef} />
       {isError ? (
         <Error clickMore={clickMore} />
       ) : (
         <>
-          <section className="section">{productElements}</section>
+          <section ref={sectionRef} className="section">{productElements}</section>
           <ScrollToTopButton />
 
           <ButtonMore

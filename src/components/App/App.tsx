@@ -4,7 +4,7 @@ import Home from '../../pages/Home';
 import ProductPage from '../../pages/ProductPage';
 import NotFound from '../../pages/NotFound';
 
-import './App.css';
+import './App.less';
 
 const App: React.FC = () => {
   return (
