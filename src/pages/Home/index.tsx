@@ -6,11 +6,11 @@ import ScrollToTopButton from '../../components/ButtonScrollToTop';
 
 import * as api from '../../utils/api';
 
-import './Home.less';
 import NotFound from '../NotFound';
 import Error from '../../components/Error';
-import Spinner from '../../components/Spinner';
 import ButtonMore from '../../components/ButtonMore';
+
+import './Home.less';
 
 const Home: React.FC = () => {
   const [products, setProducts] = React.useState([]);
@@ -20,14 +20,15 @@ const Home: React.FC = () => {
   const [isError, setIsError] = React.useState(false);
   const [currentPage, setCurrentPage] = React.useState<number>(1);
 
-  const fetchData = async () => {
+  const fetchData = async (page) => {
     setIsSpinner(true);
     try {
       const image = await api.images();
       setImages((prev) => [...prev, ...image]);
 
-      const { items } = await api.products(currentPage);
+      const { items } = await api.products(page);
       setProducts((prev) => [...prev, ...items]);
+
       setIsSpinner(false);
     } catch (error) {
       console.error(error, 'error');
@@ -35,47 +36,19 @@ const Home: React.FC = () => {
     }
   };
 
-  const clickMore = () => {
+  const clickMore =  () => {
+    // setCurrentPage((prevPage) => prevPage + 1);
+    const nextPage = currentPage + 1
+    setCurrentPage(nextPage)
+    
     if (isError) {
-      setIsSpinner(true);
-      return (async () => {
-        try {
-          const image = await api.images();
-          setImages((prev) => [...prev, ...image]);
-
-          const { items } = await api.products(currentPage);
-          setProducts((prev) => [...prev, ...items]);
-
-          setIsLoading(false);
-          setIsError(false);
-          setIsSpinner(false);
-        } catch (error) {
-          console.error(error, 'error');
-          setIsError(true);
-        }
-      })();
+      setCurrentPage((prevPage) => prevPage - 1);
+      setIsError(false);
+      
+      return fetchData();
     }
 
-    setCurrentPage(currentPage + 1);
-
-    (async () => {
-      setIsSpinner(true);
-      try {
-        const image = await api.images();
-        setImages((prev) => [...prev, ...image]);
-
-        const { items } = await api.products(currentPage);
-        setProducts((prev) => [...prev, ...items]);
-
-        setIsLoading(false);
-        setIsSpinner(false);
-      } catch (error) {
-        console.error(error, 'error');
-        setIsError(true);
-      }
-    })();
-
-    setIsError(false);
+    fetchData(nextPage);
   };
 
   React.useEffect(() => {
@@ -122,7 +95,11 @@ const Home: React.FC = () => {
           <section className="section">{productElements}</section>
           <ScrollToTopButton />
 
-          <ButtonMore clickMore={clickMore} currentPage={currentPage} isSpinner={isSpinner} />
+          <ButtonMore
+            clickMore={clickMore}
+            currentPage={currentPage}
+            isSpinner={isSpinner}
+          />
         </>
       )}
     </main>
