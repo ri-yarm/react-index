@@ -1,12 +1,19 @@
-import { useState } from 'react';
+import { Routes, Route } from 'react-router-dom';
 
 import Home from '../../pages/Home';
+import ProductPage from '../../pages/ProductPage';
+import NotFound from '../../pages/NotFound';
 
 import './App.css';
 
 const App: React.FC = () => {
-
-  return <Home />;
+  return (
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/items/:id" element={<ProductPage />} />
+      <Route path="/*" element={<NotFound />} />
+    </Routes>
+  );
 };
 
 export default App;

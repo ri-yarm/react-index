@@ -1,3 +1,7 @@
+import { Link } from 'react-router-dom';
+
+import { formatDate } from '../../utils/date';
+
 import './Product.less';
 
 type ProductProps = {
@@ -21,24 +25,15 @@ const Product: React.FC<ProductProps> = ({
   createdAt,
   image,
 }) => {
-  const isSeen = (seen = seen ? 'Просмотрено' : '');
-
-  function formatDate(dateString: string) {
-    const date = new Date(dateString.replace(' ', ''));
-    const day = date.getDate().toString().padStart(2, '0');
-    const month = (date.getMonth() + 1).toString().padStart(2, '0');
-    const year = (date.getFullYear() % 100).toString().padStart(2, '0');
-    const hours = date.getHours().toString().padStart(2, '0');
-    const minutes = date.getMinutes().toString().padStart(2, '0');
-
-    return `${day}.${month}.${year} ${hours}:${minutes}`;
-  }
+  
 
   return (
     <article className="product">
       <div className="product__wrapper">
-        {seen && <span className="product__seen">{isSeen}</span>}
-        <img className="product__img" src={image} alt="" />
+        {seen && <span className="product__seen">Просмотрено</span>}
+        <Link to={`items/:${id}`}>
+          <img className="product__img" src={image} alt="" />
+        </Link>
         <div className="product__info">
           <div className="product__header">
             <div className="row">
