@@ -46,8 +46,8 @@ const ScrollToTopButton: React.FC = () => {
         <path
           d="M47.5 44.25L41 37.75L34.5 44.25"
           stroke="#8F8F8F"
-          stroke-width="2"
-          stroke-linecap="round"
+          strokeWidth="2"
+          strokeLinecap="round"
         />
         <defs>
           <filter
@@ -57,9 +57,9 @@ const ScrollToTopButton: React.FC = () => {
             width="138"
             height="82"
             filterUnits="userSpaceOnUse"
-            color-interpolation-filters="sRGB"
+            colorInterpolationFilters="sRGB"
           >
-            <feFlood flood-opacity="0" result="BackgroundImageFix" />
+            <feFlood floodOpacity="0" result="BackgroundImageFix" />
             <feColorMatrix
               in="SourceAlpha"
               type="matrix"

@@ -41,7 +41,7 @@ const ProductPage: React.FC = () => {
   return (
     <main className={styles.main}>
       <Link to="/">
-        <button className={styles.back}>Вернуться назад</button>
+        <button className={styles.back}>Вернуться на главную</button>
       </Link>
       <section>
         <img src={image || ''} alt={`${product?.title || ''}.`} />

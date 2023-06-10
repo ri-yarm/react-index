@@ -9,6 +9,8 @@ import * as api from '../../utils/api';
 import './Home.less';
 import NotFound from '../NotFound';
 import Error from '../../components/Error';
+import Spinner from '../../components/Spinner';
+import ButtonMore from '../../components/ButtonMore';
 
 const Home: React.FC = () => {
   const [products, setProducts] = React.useState([]);
@@ -18,8 +20,24 @@ const Home: React.FC = () => {
   const [isError, setIsError] = React.useState(false);
   const [currentPage, setCurrentPage] = React.useState<number>(1);
 
+  const fetchData = async () => {
+    setIsSpinner(true);
+    try {
+      const image = await api.images();
+      setImages((prev) => [...prev, ...image]);
+
+      const { items } = await api.products(currentPage);
+      setProducts((prev) => [...prev, ...items]);
+      setIsSpinner(false);
+    } catch (error) {
+      console.error(error, 'error');
+      setIsError(true);
+    }
+  };
+
   const clickMore = () => {
     if (isError) {
+      setIsSpinner(true);
       return (async () => {
         try {
           const image = await api.images();
@@ -30,6 +48,7 @@ const Home: React.FC = () => {
 
           setIsLoading(false);
           setIsError(false);
+          setIsSpinner(false);
         } catch (error) {
           console.error(error, 'error');
           setIsError(true);
@@ -40,6 +59,7 @@ const Home: React.FC = () => {
     setCurrentPage(currentPage + 1);
 
     (async () => {
+      setIsSpinner(true);
       try {
         const image = await api.images();
         setImages((prev) => [...prev, ...image]);
@@ -48,6 +68,7 @@ const Home: React.FC = () => {
         setProducts((prev) => [...prev, ...items]);
 
         setIsLoading(false);
+        setIsSpinner(false);
       } catch (error) {
         console.error(error, 'error');
         setIsError(true);
@@ -101,11 +122,7 @@ const Home: React.FC = () => {
           <section className="section">{productElements}</section>
           <ScrollToTopButton />
 
-          {currentPage < 10 && (
-            <button className="more" onClick={clickMore}>
-              Показать еще
-            </button>
-          )}
+          <ButtonMore clickMore={clickMore} currentPage={currentPage} isSpinner={isSpinner} />
         </>
       )}
     </main>
