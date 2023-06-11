@@ -44,7 +44,7 @@ const ElementView: React.FC<ElementViewProps> = ({ setAlternativeView, alternati
               height="11.8"
               rx="1.9"
               stroke="#C7C7C7"
-              stroke-width="2.2"
+              strokeWidth="2.2"
             />
             <rect
               x="18.1"
@@ -53,7 +53,7 @@ const ElementView: React.FC<ElementViewProps> = ({ setAlternativeView, alternati
               height="11.8"
               rx="1.9"
               stroke="#C7C7C7"
-              stroke-width="2.2"
+              strokeWidth="2.2"
             />
             <rect
               x="1.1"
@@ -62,7 +62,7 @@ const ElementView: React.FC<ElementViewProps> = ({ setAlternativeView, alternati
               height="11.8"
               rx="1.9"
               stroke="#C7C7C7"
-              stroke-width="2.2"
+              strokeWidth="2.2"
             />
             <rect
               x="18.1"
@@ -71,7 +71,7 @@ const ElementView: React.FC<ElementViewProps> = ({ setAlternativeView, alternati
               height="11.8"
               rx="1.9"
               stroke="#C7C7C7"
-              stroke-width="2.2"
+              strokeWidth="2.2"
             />
           </svg>
         ) : (
@@ -89,7 +89,7 @@ const ElementView: React.FC<ElementViewProps> = ({ setAlternativeView, alternati
               height="11.8"
               rx="1.9"
               stroke="#00A0AB"
-              stroke-width="2.2"
+              strokeWidth="2.2"
             />
             <rect
               x="18.1"
@@ -98,7 +98,7 @@ const ElementView: React.FC<ElementViewProps> = ({ setAlternativeView, alternati
               height="11.8"
               rx="1.9"
               stroke="#00A0AB"
-              stroke-width="2.2"
+              strokeWidth="2.2"
             />
             <rect
               x="1.1"
@@ -107,7 +107,7 @@ const ElementView: React.FC<ElementViewProps> = ({ setAlternativeView, alternati
               height="11.8"
               rx="1.9"
               stroke="#00A0AB"
-              stroke-width="2.2"
+              strokeWidth="2.2"
             />
             <rect
               x="18.1"
@@ -116,7 +116,7 @@ const ElementView: React.FC<ElementViewProps> = ({ setAlternativeView, alternati
               height="11.8"
               rx="1.9"
               stroke="#00A0AB"
-              stroke-width="2.2"
+              strokeWidth="2.2"
             />
           </svg>
         )}
@@ -137,7 +137,7 @@ const ElementView: React.FC<ElementViewProps> = ({ setAlternativeView, alternati
               height="11.8"
               rx="1.9"
               stroke="#00A0AB"
-              stroke-width="2.2"
+              strokeWidth="2.2"
             />
             <rect
               x="1.1"
@@ -146,7 +146,7 @@ const ElementView: React.FC<ElementViewProps> = ({ setAlternativeView, alternati
               height="11.8"
               rx="1.9"
               stroke="#00A0AB"
-              stroke-width="2.2"
+              strokeWidth="2.2"
             />
           </svg>
         ) : (
@@ -164,7 +164,7 @@ const ElementView: React.FC<ElementViewProps> = ({ setAlternativeView, alternati
               height="11.8"
               rx="1.9"
               stroke="#C7C7C7"
-              stroke-width="2.2"
+              strokeWidth="2.2"
             />
             <rect
               x="1.1"
@@ -173,7 +173,7 @@ const ElementView: React.FC<ElementViewProps> = ({ setAlternativeView, alternati
               height="11.8"
               rx="1.9"
               stroke="#C7C7C7"
-              stroke-width="2.2"
+              strokeWidth="2.2"
             />
           </svg>
         )}

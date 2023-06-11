@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams, useNavigate, Link } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { productPage, getOneImage } from "../../utils/api";
 import { formatDate } from "../../utils/date";
 
@@ -26,12 +26,15 @@ const ProductPage: React.FC = () => {
     setIsLoading(true);
     (async () => {
       try {
-        const dataProduct = await productPage(id?.substring(1));
-        const { urls } = await getOneImage();
+        if (id !== undefined) {
+          const dataProduct = await productPage(id.substring(1));
+          const { urls } = await getOneImage();
 
-        setProduct(dataProduct);
-        setImage(urls.small);
-        setIsLoading(false);
+          setProduct(dataProduct);
+          setImage(urls.small);
+          setIsLoading(false);
+        }
+        // const dataProduct = await productPage(id?.substring(1));
       } catch (error) {
         console.error(error);
         setIsError(true);
