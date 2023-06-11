@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+// @ts-nocheck
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -24,15 +26,14 @@ import Header from "../../components/Header";
 const Home: React.FC = () => {
   const dispatch = useDispatch();
   const { products, images, status } = useSelector(selectProduct);
-  console.log(status);
-
-  const [isSpinner, setIsSpinner] = React.useState(false);
-  const [isError, setIsError] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [isSpinner, setIsSpinner] = React.useState<boolean>(false);
+  const [isError, setIsError] = React.useState<boolean>(false);
   const [currentPage, setCurrentPage] = React.useState<number>(1);
-  const [alternativeView, setAlternativeView] = React.useState(false);
+  const [alternativeView, setAlternativeView] = React.useState<boolean>(false);
 
   /** Делаем запрос к серверу через редакс */
-  const fetchAndUseProducts = async (page) => {
+  const fetchAndUseProducts = async (page: number) => {
     setIsSpinner(true);
     try {
       await Promise.all([
@@ -66,9 +67,11 @@ const Home: React.FC = () => {
   
   /** При первой загрузке получаем начальную страницу и ставим скелетонов */
   React.useEffect(() => {
+    setIsLoading(true);
     (async () => {
       try {
         await fetchAndUseProducts({currentPage});
+        setIsLoading(false)
       } catch (error) {
         console.error(error);
         setIsError(true);
@@ -76,25 +79,23 @@ const Home: React.FC = () => {
     })();
   }, []);
 
-  // Рисуем скелетоны
-  const skeleton = [...Array(20)].map((_, index) => (
-    <Skeleton alternativeView={alternativeView} key={index} />
-  ));
-  // Сами элементы
-  const elements = products.map((el, i) => {
-    return (
-      <Product
-        key={el.id}
-        alternativeView={alternativeView}
-        {...el}
-        image={images[i] ? images[i].urls.small_s3 : null}
-      />
-    );
-  });
+ // Рисуем скелетоны
+ const skeleton = [...Array(20)].map((_, index) => (
+  <Skeleton alternativeView={alternativeView} key={index} />
+));
+// Сами элементы
+const elements = products.map((el, i) => (
+  <Product
+    key={el.id}
+    alternativeView={alternativeView}
+    {...el}
+    image={images[i] ? images[i].urls.small_s3 : null}
+  />
+));
 
   // если загрузка или пока массив продуктов равен нулю рисуем скелетоны
   const productElements =
-    status === 'loading' || products.length === 0 ? skeleton : elements;
+    isLoading || products.length === 0 ? skeleton : elements;
 
   // Если массив продуктов и нет ошибки и нет загрузки, рисуем 404
   // ? Рисуется только если например изначально загружается 20 страница

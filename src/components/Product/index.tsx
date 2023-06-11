@@ -83,6 +83,7 @@ const Product: React.FC<ProductProps> = ({
       <div className={styles.wrapper}>
         {seen && <span className={styles.seen}>Просмотрено</span>}
         <Link className={styles.Link} to={`items/:${id}`}>
+          {/* @ts-ingore */}
           <Slider {...settings}>
             <div>
               <img className={styles.img} src={image} alt={` ${title}.`} />

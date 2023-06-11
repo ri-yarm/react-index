@@ -1,6 +1,10 @@
 import ContentLoader from "react-content-loader";
 
-const Skeleton: React.FC = ({ alternativeView }) =>
+type SkeletonProps = {
+  alternativeView: boolean;
+}
+
+const Skeleton: React.FC<SkeletonProps> = ({ alternativeView }) =>
   alternativeView ? (
     <ContentLoader
       speed={2}

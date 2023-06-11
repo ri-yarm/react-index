@@ -19,6 +19,7 @@ const ProductPage: React.FC = () => {
     price: number;
     address: string;
     createdAt: string;
+    about: string;
   }>();
 
   useEffect(() => {

@@ -1,6 +1,10 @@
 import styles from './Error.module.less'
 
-const Error = ({clickMore}) => {
+type ErrorProps = {
+  clickMore: () => void
+}
+
+const Error: React.FC<ErrorProps> = ({clickMore}) => {
   return (
     <div className={styles.container}>
       <p>Ошибка при загрузке</p>

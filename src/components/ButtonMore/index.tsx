@@ -1,6 +1,12 @@
 import Spinner from "../Spinner";
 
-const ButtonMore = ({ clickMore,currentPage, isSpinner }) => {
+type buttonMoreProps = {
+  clickMore: () => void;
+  currentPage: number;
+  isSpinner: boolean
+};
+
+const ButtonMore: React.FC<buttonMoreProps> = ({ clickMore,currentPage, isSpinner }) => {
 
   if (isSpinner) {
     return <Spinner isVisible={isSpinner} />

@@ -1,4 +1,6 @@
+/** Конвертируем в дату */
 export const formatDate= (dateString: string) => {
+  //! с севера приходило дата неправильного формата, потратил много времени чтоб найти этот пробел
   const date = new Date(dateString.replace(' ', ''));
   const day = date.getDate().toString().padStart(2, '0');
   const month = (date.getMonth() + 1).toString().padStart(2, '0');

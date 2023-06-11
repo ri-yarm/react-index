@@ -2,10 +2,14 @@ import axios from 'axios';
 
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
+interface FetchProductsArgs {
+  currentPage: number;
+}
+
 // Получаем пиццу через редакс
 export const fetchProducts = createAsyncThunk(
   'products/fetchProductsStatus',
-  async ({ currentPage }) => {
+  async ({ currentPage }: FetchProductsArgs) => {
     const { data } = await axios.get(
       `https://testguru.ru/frontend-test/api/v1/items?page=${currentPage}`
     );
@@ -13,13 +17,14 @@ export const fetchProducts = createAsyncThunk(
   }
 );
 
+// ! unsplash возвращает, одни и те же фотографии,
+// можно было использовать те же, не делая ещё один запрос, но в чём тогда прикол?))
 export const fetchImages = createAsyncThunk(
   'images/fetchImageStatus',
   async () => {
     const {data} = await axios.get(
       `https://api.unsplash.com/photos?client_id=xUCATjhuz-w76RvvAZDVIJpG7ctNss4X4y1o5e7uWkU`
     );
-    // console.log(data);
     return data;
   }
 );
@@ -34,34 +39,33 @@ const productSlice = createSlice({
   name: 'products',
   initialState,
   reducers: {
-    setProducts(state, action) {
+    /* setProducts(state, action) {
       state.products.push(...action.payload);
-    },
+    }, */
   },
   // обрабатываем асинхрон с редаксом fetchproduct
-  extraReducers: {
-    [fetchProducts.pending]: (state, action) => {
-      state.status = 'loading';
-    },
-    [fetchProducts.fulfilled]: (state, action) => {
-      state.products.push(...action.payload);
-      state.status = 'success';
-    },
-    // ? при ошибке удаляем продукты и покажет страницу с ошибкой
-    [fetchProducts.rejected]: (state, action) => {
-      state.products = [];
-      state.status = 'error';
-    },
-
-    [fetchImages.fulfilled]: (state, action) => {
-      state.images.push(...action.payload);
-      state.status = 'success';
-    },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchProducts.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(fetchProducts.fulfilled, (state, action) => {
+        state.products.push(...action.payload);
+        state.status = 'success';
+      })
+      .addCase(fetchProducts.rejected, (state) => {
+        state.products = [];
+        state.status = 'error';
+      })
+      .addCase(fetchImages.fulfilled, (state, action) => {
+        state.images.push(...action.payload);
+        state.status = 'success';
+      });
   },
 });
 
 export const selectProduct = (state) => state.productSlice
 
-export const { setProducts } = productSlice.actions;
+// export const { setProducts } = productSlice.actions;
 
 export default productSlice.reducer;

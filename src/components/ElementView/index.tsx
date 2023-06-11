@@ -2,7 +2,12 @@ import { useEffect } from "react";
 
 import styles from "./Element.module.less";
 
-const ElementView: React.FC = ({ setAlternativeView, alternativeView }) => {
+type ElementViewProps = {
+  setAlternativeView: (arg: boolean) => void;
+  alternativeView: boolean;
+}
+
+const ElementView: React.FC<ElementViewProps> = ({ setAlternativeView, alternativeView }) => {
 
   const clickStylesHandler = () => {
     setAlternativeView(false);

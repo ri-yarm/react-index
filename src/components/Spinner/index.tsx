@@ -1,6 +1,10 @@
 import styles from './Spinner.module.less';
 
-const Spinner = ({ isVisible }) =>
+type SpinnerProps = {
+  isVisible: boolean;
+}
+
+const Spinner: React.FC<SpinnerProps> = ({ isVisible }) =>
   isVisible ? (
     <svg
       width="34"
