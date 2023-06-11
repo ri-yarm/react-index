@@ -1,4 +1,11 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+
+import {
+  fetchProducts,
+  fetchImages,
+  selectProduct,
+} from "../../redux/slices/productSlice";
 
 import Product from "../../components/Product";
 import Skeleton from "../../components/Product/Skeleton";
@@ -15,59 +22,55 @@ import ElementView from "../../components/ElementView";
 import Header from "../../components/Header";
 
 const Home: React.FC = () => {
-  const [products, setProducts] = React.useState([]);
-  const [images, setImages] = React.useState([]);
-  const [isLoading, setIsLoading] = React.useState(false);
+  const dispatch = useDispatch();
+  const { products, images, status } = useSelector(selectProduct);
+  console.log(status);
+
   const [isSpinner, setIsSpinner] = React.useState(false);
   const [isError, setIsError] = React.useState(false);
   const [currentPage, setCurrentPage] = React.useState<number>(1);
   const [alternativeView, setAlternativeView] = React.useState(false);
 
-  const fetchData = async (page: number) => {
+  /** Делаем запрос к серверу через редакс */
+  const fetchAndUseProducts = async (page) => {
     setIsSpinner(true);
     try {
-      const image = await api.images();
-      setImages((prev) => [...prev, ...image]);
-
-      const { items } = await api.products(page);
-      setProducts((prev) => [...prev, ...items]);
-
+      await Promise.all([
+        dispatch(fetchProducts( page )),
+        dispatch(fetchImages())
+      ]);
       setIsSpinner(false);
     } catch (error) {
-      console.error(error, "error");
+      console.error(error);
       setIsError(true);
     }
   };
 
-  const clickMore = () => {
+  /** Увеличиваем стейт страницы и вызываем получение новых данных */
+  const clickMore = async () => {
     const nextPage = currentPage + 1;
-    setCurrentPage(nextPage);
+    await setCurrentPage(nextPage);
 
+    // Если ошибка уменьшаем стейт, что бы при
+    // повторной ошибке получить данные, получать ту странницу
+    // которая нужна
     if (isError) {
       setCurrentPage((prevPage) => prevPage - 1);
       setIsError(false);
-
-      return fetchData();
+      
+      return fetchAndUseProducts({ currentPage: nextPage });
     }
-
-    fetchData(nextPage);
+  
+    fetchAndUseProducts({ currentPage: nextPage }); 
   };
-
+  
+  /** При первой загрузке получаем начальную страницу и ставим скелетонов */
   React.useEffect(() => {
-    setIsLoading(true);
-
     (async () => {
       try {
-        const image = await api.images();
-        setImages(image);
-
-        const { items } = await api.products(currentPage);
-        setProducts(items);
-
-        setIsLoading(false);
+        await fetchAndUseProducts({currentPage});
       } catch (error) {
-        console.error(error, "error");
-
+        console.error(error);
         setIsError(true);
       }
     })();
@@ -91,18 +94,18 @@ const Home: React.FC = () => {
 
   // если загрузка или пока массив продуктов равен нулю рисуем скелетоны
   const productElements =
-    isLoading || products.length === 0 ? skeleton : elements;
+    status === 'loading' || products.length === 0 ? skeleton : elements;
 
-  // Если массив продуктов и нет ошибка и нет загрузки, рисуем 404
+  // Если массив продуктов и нет ошибки и нет загрузки, рисуем 404
   // ? Рисуется только если например изначально загружается 20 страница
-  if (products.length === 0 && !isError && !isLoading) {
+  if ( products === 0 && !isError && status === 'success') {
     return <NotFound />;
   }
 
   return (
     <>
       <main className="main">
-      <Header />
+        <Header />
         <ElementView
           setAlternativeView={setAlternativeView}
           alternativeView={alternativeView}

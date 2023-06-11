@@ -1,18 +1,18 @@
 import axios from 'axios';
 
 const BASE_URL = 'https://testguru.ru/frontend-test/api/v1/items';
+const IMAGE_URL = 'https://api.unsplash.com/photos'
 
 export const images = async () => {
   const { data } = await axios.get(
-    'https://api.unsplash.com/photos?client_id=xUCATjhuz-w76RvvAZDVIJpG7ctNss4X4y1o5e7uWkU'
+    `${IMAGE_URL}?client_id=xUCATjhuz-w76RvvAZDVIJpG7ctNss4X4y1o5e7uWkU`
   );
-  console.log(data);
   return data;
 };
 
 export const getOneImage = async () => {
   const { data } = await axios.get(
-    'https://api.unsplash.com/photos/random?client_id=xUCATjhuz-w76RvvAZDVIJpG7ctNss4X4y1o5e7uWkU'
+    `${IMAGE_URL}/random?client_id=xUCATjhuz-w76RvvAZDVIJpG7ctNss4X4y1o5e7uWkU`
   );
 
   return data;
