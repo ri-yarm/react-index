@@ -13,18 +13,18 @@
   -ms-user-select: none;
   user-select: none;
 
-  &__wrapper {
+  .wrapper {
     position: relative;
   }
 
-  &__info {
+  .info {
     padding: 10px 12px;
     border: 1px solid #f3f3f3;
     border-radius: 0 0 12px 12px;
     border-top: none;
   }
 
-  &__seen {
+  .seen {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -37,7 +37,7 @@
     z-index: 2;
 
     top: 5px;
-    left: 58px;
+    left: 70px;
 
     font-weight: 400;
     font-size: 12px;
@@ -45,31 +45,31 @@
     color: @main;
   }
 
-  &__header {
+  .header {
     margin: 0 0 10px;
   }
 
-  &__img {
+  .img {
     width: 224px;
     height: 260px;
 
     border-radius: 12px 12px 0 0;
   }
 
-  &__price {
+  .price {
     font-weight: 700;
     font-size: 22px;
     line-height: 25px;
   }
 
-  &__title {
+  .title {
     font-weight: 500;
     font-size: 14px;
     line-height: 16px;
     margin: 0 0 10px;
   }
 
-  &__like {
+  .like {
     background: none;
     border: none;
     width: 20px;
@@ -82,7 +82,7 @@
     }
   }
 
-  &__footer {
+  .footer {
     font-style: normal;
     font-weight: 400;
     font-size: 12px;
@@ -104,24 +104,31 @@
   -ms-user-select: none;
   user-select: none;
 
-  &__wrapper {
-    position: relative;
+  .wrapper {
     display: flex;
+    width: 100%;
+    height: 100%;
 
-    .slick-slider {
-      width: 156px;
-      height: 134px;
-    }
+    /* .Link {
+      .slick-slider {
+        width: 156px !important;
+        height: 134px !important;
+      }
+    } */
   }
 
-  &__info {
+  .info {
     padding: 10px 12px;
     border: 1px solid #f3f3f3;
     border-radius: 0 0 12px 12px;
     border-top: none;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
   }
 
-  &__seen {
+  .seen {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -134,7 +141,7 @@
     z-index: 2;
 
     top: 5px;
-    left: 58px;
+    left: 32px;
 
     font-weight: 400;
     font-size: 12px;
@@ -142,31 +149,31 @@
     color: @main;
   }
 
-  &__header {
+  .header {
     margin: 0 0 10px;
   }
 
-  &__img {
+  .img {
     width: 156px;
     height: 134px;
 
     border-radius: 12px 0 0 12px;
   }
 
-  &__price {
+  .price {
     font-weight: 700;
     font-size: 22px;
     line-height: 25px;
   }
 
-  &__title {
+  .title {
     font-weight: 500;
     font-size: 14px;
     line-height: 16px;
     margin: 0 0 10px;
   }
 
-  &__like {
+  .like {
     background: none;
     border: none;
     width: 20px;
@@ -179,7 +186,7 @@
     }
   }
 
-  &__footer {
+  .footer {
     font-style: normal;
     font-weight: 400;
     font-size: 12px;
@@ -188,17 +195,5 @@
   }
 }
 
-// кастомные стили Свайпера
-.slick-dots {
-  bottom: 5px !important;
-}
-.slick-dots li.slick-active button:before {
-  color: @blue !important;
-}
-.slick-dots li button:before {
-  color: @gray !important;
-  font-size: 10px !important;
-}
-.slick-dots li {
-  margin: 0 !important;
-}
+
+

@@ -4,8 +4,6 @@ import Slider from "react-slick";
 
 import { formatDate } from "../../utils/date";
 
-import "./Product.less";
-
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
@@ -16,6 +14,9 @@ import photo3 from "../../assets/photoForSlider3.jpg";
 import defaultLike from "../../assets/defaultLikeButton.svg";
 import likedButton from "../../assets/likedButton.svg";
 
+import './Slider.less'
+import styles from "./Product.module.less";
+
 type ProductProps = {
   id: string;
   seen: boolean;
@@ -25,6 +26,7 @@ type ProductProps = {
   about: string;
   createdAt: string;
   image: string;
+  alternativeView: boolean;
 };
 
 const Product: React.FC<ProductProps> = ({
@@ -35,6 +37,7 @@ const Product: React.FC<ProductProps> = ({
   address,
   createdAt,
   image,
+  alternativeView,
 }) => {
   const [isLiked, setIsLiked] = useState(false);
   /** конфиг для слайдера */
@@ -49,6 +52,7 @@ const Product: React.FC<ProductProps> = ({
     slidesToShow: 1,
     slidesToScroll: 1,
     draggable: true,
+    className: alternativeView && 'alternative-slider'
   };
 
   /** Записываем в хранилище ключ id со значением id */
@@ -71,43 +75,47 @@ const Product: React.FC<ProductProps> = ({
   }, []);
 
   return (
-    <article className="product">
-      <div className="product__wrapper">
-        {seen && <span className="product__seen">Просмотрено</span>}
-        <Link to={`items/:${id}`}>
+    <article
+      className={`${
+        alternativeView ? styles.product_alternative : styles.product
+      }`}
+    >
+      <div className={styles.wrapper}>
+        {seen && <span className={styles.seen}>Просмотрено</span>}
+        <Link className={styles.Link} to={`items/:${id}`}>
           <Slider {...settings}>
             <div>
-              <img className="product__img" src={image} alt={` ${title}.`} />
+              <img className={styles.img} src={image} alt={` ${title}.`} />
             </div>
             <div>
-              <img className="product__img" src={photo1} alt={` ${title}.`} />
+              <img className={styles.img} src={photo1} alt={` ${title}.`} />
             </div>
             <div>
-              <img className="product__img" src={photo2} alt={` ${title}.`} />
+              <img className={styles.img} src={photo2} alt={` ${title}.`} />
             </div>
             <div>
-              <img className="product__img" src={photo3} alt={` ${title}.`} />
+              <img className={styles.img} src={photo3} alt={` ${title}.`} />
             </div>
           </Slider>
         </Link>
-        <div className="product__info">
-          <div className="product__header">
+        <div className={styles.info}>
+          <div className={styles.header}>
             <div className="row">
-              <h4 className="product__price">{Math.ceil(price)} ₽</h4>
-              <button onClick={handleLikeClick} className="product__like">
+              <h4 className={styles.price}>{Math.ceil(price)} ₽</h4>
+              <button onClick={handleLikeClick} className={styles.like}>
                 <img
-                  className="like_img"
+                  className={styles.like_img}
                   src={isLiked ? likedButton : defaultLike}
                   alt=""
                 />
               </button>
             </div>
           </div>
-          <h3 className="product__title">{title}</h3>
-          <div className="product__footer">
+          <h3 className={styles.title}>{title}</h3>
+          <div className={styles.footer}>
             <div className="row">
-              <p className="product__city">{address}</p>
-              <p className="product__date">{formatDate(createdAt)}</p>
+              <p className={styles.city}>{address}</p>
+              <p className={styles.date}>{formatDate(createdAt)}</p>
             </div>
           </div>
         </div>

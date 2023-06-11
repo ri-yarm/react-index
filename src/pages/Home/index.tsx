@@ -14,15 +14,15 @@ import './Home.less';
 import ElementView from '../../components/ElementView';
 
 const Home: React.FC = () => {
-  const sectionRef = React.useRef(null)
   const [products, setProducts] = React.useState([]);
   const [images, setImages] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(false);
   const [isSpinner, setIsSpinner] = React.useState(false);
   const [isError, setIsError] = React.useState(false);
   const [currentPage, setCurrentPage] = React.useState<number>(1);
+  const [alternativeView, setAlternativeView] = React.useState(false);
 
-  const fetchData = async (page) => {
+  const fetchData = async (page: number) => {
     setIsSpinner(true);
     try {
       const image = await api.images();
@@ -39,7 +39,6 @@ const Home: React.FC = () => {
   };
 
   const clickMore =  () => {
-    // setCurrentPage((prevPage) => prevPage + 1);
     const nextPage = currentPage + 1
     setCurrentPage(nextPage)
     
@@ -73,14 +72,16 @@ const Home: React.FC = () => {
     })();
   }, []);
 
-  const skeleton = [...Array(20)].map((_, index) => <Skeleton key={index} />);
-  const elements = products.map((el, i) => (
-    <Product
+  const skeleton = [...Array(20)].map((_, index) => <Skeleton alternativeView={alternativeView} key={index} />);
+  const elements = products.map((el, i) => {
+    return <Product
       key={el.id}
+      alternativeView={alternativeView}
       {...el}
       image={images[i] ? images[i].urls.small_s3 : null}
     />
-  ));
+  });
+
   const productElements =
     isLoading || products.length === 0 ? skeleton : elements;
 
@@ -90,12 +91,12 @@ const Home: React.FC = () => {
 
   return (
     <main className="main">
-      <ElementView sectionRef={sectionRef} />
+      <ElementView setAlternativeView={setAlternativeView} alternativeView={alternativeView}  />
       {isError ? (
         <Error clickMore={clickMore} />
       ) : (
         <>
-          <section ref={sectionRef} className="section">{productElements}</section>
+          <section className={`${alternativeView ? 'section-alternative' : 'section'}`}>{productElements}</section>
           <ScrollToTopButton />
 
           <ButtonMore

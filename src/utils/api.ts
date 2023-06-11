@@ -6,7 +6,7 @@ export const images = async () => {
   const { data } = await axios.get(
     'https://api.unsplash.com/photos?client_id=xUCATjhuz-w76RvvAZDVIJpG7ctNss4X4y1o5e7uWkU'
   );
-  
+  console.log(data);
   return data;
 };
 
