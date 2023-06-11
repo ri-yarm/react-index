@@ -9,12 +9,12 @@ type ElementViewProps = {
 
 const ElementView: React.FC<ElementViewProps> = ({ setAlternativeView, alternativeView }) => {
 
-  const clickStylesHandler = () => {
+  const clickDefaultView = () => {
     setAlternativeView(false);
     localStorage.setItem('alternativeView', 'false')
   };
 
-  const clickStyles = () => {
+  const clickAlternativeView = () => {
     setAlternativeView(true);
     localStorage.setItem('alternativeView', 'true')
   };
@@ -28,7 +28,7 @@ const ElementView: React.FC<ElementViewProps> = ({ setAlternativeView, alternati
 
   return (
     <nav className={styles.nav}>
-      <button disabled={!alternativeView} onClick={clickStylesHandler}>
+      <button disabled={!alternativeView} onClick={clickDefaultView}>
         {alternativeView ? (
           <svg
             width="31"
@@ -121,7 +121,7 @@ const ElementView: React.FC<ElementViewProps> = ({ setAlternativeView, alternati
           </svg>
         )}
       </button>
-      <button disabled={alternativeView} onClick={clickStyles}>
+      <button disabled={alternativeView} onClick={clickAlternativeView}>
         {alternativeView ? (
           <svg
             width="31"
