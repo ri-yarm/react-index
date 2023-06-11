@@ -95,7 +95,7 @@ const Home: React.FC = () => {
       {isError ? (
         <Error clickMore={clickMore} />
       ) : (
-        <>
+        <div>
           <section className={`${alternativeView ? 'section-alternative' : 'section'}`}>{productElements}</section>
           <ScrollToTopButton />
 
@@ -104,7 +104,7 @@ const Home: React.FC = () => {
             currentPage={currentPage}
             isSpinner={isSpinner}
           />
-        </>
+        </div>
       )}
     </main>
   );

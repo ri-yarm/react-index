@@ -2,21 +2,21 @@ import { useEffect } from "react";
 
 import styles from "./Element.module.less";
 
-const ElementView = ({ setAlternativeView, alternativeView }) => {
+const ElementView: React.FC = ({ setAlternativeView, alternativeView }) => {
 
   const clickStylesHandler = () => {
     setAlternativeView(false);
-    localStorage.setItem('alternativeView', alternativeView)
+    localStorage.setItem('alternativeView', 'false')
   };
 
   const clickStyles = () => {
     setAlternativeView(true);
-    localStorage.setItem('alternativeView', alternativeView)
+    localStorage.setItem('alternativeView', 'true')
   };
 
   useEffect(() => {
     const isView = localStorage.getItem('alternativeView')
-    if(isView) {
+    if(isView === 'true') {
       return setAlternativeView(true)
     }
   }, [])

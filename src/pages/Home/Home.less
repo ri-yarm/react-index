@@ -1,7 +1,9 @@
-@import '../../styles/variables.less';
+@import "../../styles/variables.less";
 
 .main {
   width: 100%;
+  padding: 92px 0 40px 0;
+  margin: 0 auto;
 
   .section {
     width: 968px;
@@ -24,13 +26,43 @@
     color: @blue;
   }
 
+  @media (max-width: 1000px) {
+    .section {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      width: 800px;
+      margin: 0 auto;
+justify-items: center;
+    }
+  }
+
+   @media (max-width: 812px) {
+    .section {
+      grid-template-columns: repeat(2, 1fr);
+      width: 518px;
+    }
+  }
+
+  @media (max-width: 522px) {
+    .section {
+      grid-template-columns: repeat(1, 1fr);
+      gap: 10px;
+      width: 100%;
+    }
+  }
 }
 
 .section-alternative {
   grid-template-columns: repeat(2, 1fr) !important;
   width: 968px;
-    margin: 0 auto 39px;
-    padding: 0;
-    display: grid;
-    gap: 24px;
+  margin: 0 auto 39px;
+  padding: 0;
+  display: grid;
+  gap: 24px;
+
+  @media (max-width: 1000px) {
+  grid-template-columns: repeat(1, 1fr) !important;
+    justify-items: center;
+    width: 100%;
+  }
 }
