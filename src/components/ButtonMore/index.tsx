@@ -6,7 +6,7 @@ const ButtonMore = ({ clickMore,currentPage, isSpinner }) => {
     return <Spinner isVisible={isSpinner} />
   }
   
-  return (currentPage > 10 ? null : <button onClick={clickMore} className="more">Показать еще</button>)
+  return (currentPage >= 10 ? null : <button onClick={clickMore} className="more">Показать еще</button>)
 }
   
 export default ButtonMore;

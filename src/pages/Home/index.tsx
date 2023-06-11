@@ -1,17 +1,18 @@
-import React from 'react';
+import React from "react";
 
-import Product from '../../components/Product';
-import Skeleton from '../../components/Product/Skeleton';
-import ScrollToTopButton from '../../components/ButtonScrollToTop';
+import Product from "../../components/Product";
+import Skeleton from "../../components/Product/Skeleton";
+import ScrollToTopButton from "../../components/ButtonScrollToTop";
 
-import * as api from '../../utils/api';
+import * as api from "../../utils/api";
 
-import NotFound from '../NotFound';
-import Error from '../../components/Error';
-import ButtonMore from '../../components/ButtonMore';
+import NotFound from "../NotFound";
+import Error from "../../components/Error";
+import ButtonMore from "../../components/ButtonMore";
 
-import './Home.less';
-import ElementView from '../../components/ElementView';
+import "./Home.less";
+import ElementView from "../../components/ElementView";
+import Header from "../../components/Header";
 
 const Home: React.FC = () => {
   const [products, setProducts] = React.useState([]);
@@ -33,19 +34,19 @@ const Home: React.FC = () => {
 
       setIsSpinner(false);
     } catch (error) {
-      console.error(error, 'error');
+      console.error(error, "error");
       setIsError(true);
     }
   };
 
-  const clickMore =  () => {
-    const nextPage = currentPage + 1
-    setCurrentPage(nextPage)
-    
+  const clickMore = () => {
+    const nextPage = currentPage + 1;
+    setCurrentPage(nextPage);
+
     if (isError) {
       setCurrentPage((prevPage) => prevPage - 1);
       setIsError(false);
-      
+
       return fetchData();
     }
 
@@ -65,48 +66,69 @@ const Home: React.FC = () => {
 
         setIsLoading(false);
       } catch (error) {
-        console.error(error, 'error');
+        console.error(error, "error");
 
         setIsError(true);
       }
     })();
   }, []);
 
-  const skeleton = [...Array(20)].map((_, index) => <Skeleton alternativeView={alternativeView} key={index} />);
+  // Рисуем скелетоны
+  const skeleton = [...Array(20)].map((_, index) => (
+    <Skeleton alternativeView={alternativeView} key={index} />
+  ));
+  // Сами элементы
   const elements = products.map((el, i) => {
-    return <Product
-      key={el.id}
-      alternativeView={alternativeView}
-      {...el}
-      image={images[i] ? images[i].urls.small_s3 : null}
-    />
+    return (
+      <Product
+        key={el.id}
+        alternativeView={alternativeView}
+        {...el}
+        image={images[i] ? images[i].urls.small_s3 : null}
+      />
+    );
   });
 
+  // если загрузка или пока массив продуктов равен нулю рисуем скелетоны
   const productElements =
     isLoading || products.length === 0 ? skeleton : elements;
 
+  // Если массив продуктов и нет ошибка и нет загрузки, рисуем 404
+  // ? Рисуется только если например изначально загружается 20 страница
   if (products.length === 0 && !isError && !isLoading) {
     return <NotFound />;
   }
 
   return (
-    <main className="main">
-      <ElementView setAlternativeView={setAlternativeView} alternativeView={alternativeView}  />
-      {isError ? (
-        <Error clickMore={clickMore} />
-      ) : (
-        <div>
-          <section className={`${alternativeView ? 'section-alternative' : 'section'}`}>{productElements}</section>
-          <ScrollToTopButton />
+    <>
+      <main className="main">
+      <Header />
+        <ElementView
+          setAlternativeView={setAlternativeView}
+          alternativeView={alternativeView}
+        />
+        {isError ? (
+          <Error clickMore={clickMore} />
+        ) : (
+          <>
+            <section
+              className={`${
+                alternativeView ? "section-alternative" : "section"
+              }`}
+            >
+              {productElements}
+            </section>
+            <ScrollToTopButton />
 
-          <ButtonMore
-            clickMore={clickMore}
-            currentPage={currentPage}
-            isSpinner={isSpinner}
-          />
-        </div>
-      )}
-    </main>
+            <ButtonMore
+              clickMore={clickMore}
+              currentPage={currentPage}
+              isSpinner={isSpinner}
+            />
+          </>
+        )}
+      </main>
+    </>
   );
 };
 
