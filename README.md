@@ -17,7 +17,7 @@
 
 ***
 
-* [Ссылка на GitHub Pages](https://github.com/ri-yarm/react-index)
+* [Ссылка на GitHub Pages](https://ri-yarm.github.io/react-index/)
 ***
 ### **Требования**
 
